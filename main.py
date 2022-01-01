@@ -8,7 +8,7 @@ from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
 if is_pyqt5():
     from matplotlib.backends.backend_qt5agg import (
         FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
-    from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
+    from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QTableWidget
     from PyQt5.QtGui import QIcon
     from PyQt5.QtCore import pyqtSlot
 else:
@@ -50,11 +50,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             100, [(self._update_canvas, (), {})])
         self._timer.start()
 
-        button = QPushButton('PyQt5 button', self)
+        current_table = QTableWidget()
+        current_table.setRowCount(1)
+        current_table.setColumnCount(2)
+        current_table.setHorizontalHeaderLabels(["F", "H"])
+        layout.addWidget(current_table)
+
+        button = QPushButton('Sample Data (single)', self)
         layout.addWidget(button)
-        button.setToolTip('This is an example button')
+        button.setToolTip('Samples one data point')
         button.move(100,70)
-        button.clicked.connect(self.on_click)
+        button.clicked.connect(self.single_sample)
+
+        
 
     def _update_canvas(self):
         self._dynamic_ax.clear()
@@ -64,7 +72,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self._dynamic_ax.figure.canvas.draw()
 
     @pyqtSlot()
-    def on_click(self):
+    def single_sample(self):
+        h,t = self.sample_data()
+        self.current_table.item(1, 1).setText(t)
+        self.current_table.item(1, 2).setText(h)
         print('PyQt5 button click')
 
     def sample_data(self):
@@ -73,6 +84,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         temp_c = (temp_f - 32) * 5.0/9.0
         db.add_temp(session, temp_f, temp_c, time)
         db.add_humidity(session, h, time)
+        return h, temp_f
 
 
 if __name__ == "__main__":
