@@ -31,22 +31,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self._main)
         layout = QtWidgets.QVBoxLayout(self._main)
 
-        static_canvas = FigureCanvas(Figure(figsize=(5, 3)))
-        layout.addWidget(static_canvas)
-        self.addToolBar(NavigationToolbar(static_canvas, self))
-
-        dynamic_canvas = FigureCanvas(Figure(figsize=(5, 3)))
-        layout.addWidget(dynamic_canvas)
+        dynamic_canvas_temps = FigureCanvas(Figure(figsize=(5, 3)))
+        layout.addWidget(dynamic_canvas_temps)
         self.addToolBar(QtCore.Qt.BottomToolBarArea,
-                        NavigationToolbar(dynamic_canvas, self))
+                        NavigationToolbar(dynamic_canvas_temps, self))
 
-        self._static_ax = static_canvas.figure.subplots()
-        t = np.linspace(0, 10, 501)
-        self._static_ax.plot(t, np.tan(t), ".")
+        self.dynamic_ax_temps = dynamic_canvas_temps.figure.subplots()
+        self._timer = dynamic_canvas_temps.new_timer(
+            100, [(self.update_canvas_temps, (), {})])
+        self._timer.start()
 
-        self._dynamic_ax = dynamic_canvas.figure.subplots()
-        self._timer = dynamic_canvas.new_timer(
-            100, [(self._update_canvas, (), {})])
+        dynamic_canvas_humid = FigureCanvas(Figure(figsize=(5, 3)))
+        layout.addWidget(dynamic_canvas_humid)
+        self.addToolBar(QtCore.Qt.BottomToolBarArea,
+                        NavigationToolbar(dynamic_canvas_humid, self))
+
+        self.dynamic_ax_humid = dynamic_canvas_humid.figure.subplots()
+        self._timer = dynamic_canvas_humid.new_timer(
+            100, [(self.update_canvas_temps, (), {})])
         self._timer.start()
 
         self.current_table = QTableWidget()
@@ -96,16 +98,21 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     #     self._dynamic_ax.figure.canvas.draw()
     #     return
 
-    def _update_canvas(self):
+    def update_canvas_temps(self):
         temp_list, temp_times = db.get_all_temps(session, "f")
         humid_list, humid_times = db.get_all_humids(session)
-        t_times = dates.date2num(temp_times)
-        h_times = dates.date2num(humid_times)
-        self._dynamic_ax.clear()
-        # t = np.linspace(0, 10, 101)
-        # Shift the sinusoid as a function of time.
-        self._dynamic_ax.plot(temp_times, temp_list)
-        self._dynamic_ax.figure.canvas.draw()
+        # t_times = dates.date2num(temp_times)
+        # h_times = dates.date2num(humid_times)
+        self.dynamic_ax_temps.clear()
+        self.dynamic_ax_temps.plot(temp_times, temp_list)
+        self.dynamic_ax_temps.figure.canvas.draw()
+        return
+
+    def update_canvas_humid(self):
+        humid_list, humid_times = db.get_all_humids(session)
+        self.dynamic_ax_humid.clear()
+        self.dynamic_ax_humid.plot(humid_times, humid_list)
+        self.dynamic_ax_humid.figure.canvas.draw()
         return
 
     @pyqtSlot()
