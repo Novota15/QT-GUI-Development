@@ -82,8 +82,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         ps = PseudoSensor()
         h,temp_f = ps.generate_values()
         temp_c = (temp_f - 32) * 5.0/9.0
-        db.add_temp(session, temp_f, temp_c, time)
-        db.add_humidity(session, h, time)
+        now = datetime.now()
+        db.add_temp(session, temp_f, temp_c, now)
+        db.add_humidity(session, h, now)
         return h, temp_f
 
 
