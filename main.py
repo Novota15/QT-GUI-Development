@@ -97,8 +97,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def calc_metrics(self):
-        temp_list, temp_times = db.get_all_temps()
-        humid_list, humid_times = db.get_all_humids()
+        temp_list, temp_times = db.get_all_temps(session, "f")
+        humid_list, humid_times = db.get_all_humids(session)
         # set total samples
         self.metrics_table.setItem(0,0, QTableWidgetItem(str(temp_list.length())))
         # min temp
