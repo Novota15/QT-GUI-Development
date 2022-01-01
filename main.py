@@ -33,8 +33,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         dynamic_canvas_temps = FigureCanvas(Figure(figsize=(5, 3)))
         layout.addWidget(dynamic_canvas_temps)
-        self.addToolBar(QtCore.Qt.BottomToolBarArea,
-                        NavigationToolbar(dynamic_canvas_temps, self))
+        # self.addToolBar(QtCore.Qt.BottomToolBarArea,
+        #                 NavigationToolbar(dynamic_canvas_temps, self))
 
         self.dynamic_ax_temps = dynamic_canvas_temps.figure.subplots()
         self._timer = dynamic_canvas_temps.new_timer(
@@ -43,12 +43,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         dynamic_canvas_humid = FigureCanvas(Figure(figsize=(5, 3)))
         layout.addWidget(dynamic_canvas_humid)
-        self.addToolBar(QtCore.Qt.BottomToolBarArea,
-                        NavigationToolbar(dynamic_canvas_humid, self))
+        # self.addToolBar(QtCore.Qt.BottomToolBarArea,
+        #                 NavigationToolbar(dynamic_canvas_humid, self))
 
         self.dynamic_ax_humid = dynamic_canvas_humid.figure.subplots()
         self._timer = dynamic_canvas_humid.new_timer(
-            100, [(self.update_canvas_temps, (), {})])
+            150, [(self.update_canvas_temps, (), {})])
         self._timer.start()
 
         self.current_table = QTableWidget()
