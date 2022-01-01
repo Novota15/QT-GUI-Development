@@ -52,8 +52,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.current_table.setRowCount(1)
         self.current_table.setColumnCount(2)
         self.current_table.setHorizontalHeaderLabels(["F", "H"])
-        self.current_table.setItem(0,0, QTableWidgetItem(0.0))
-        self.current_table.setItem(0,0, QTableWidgetItem(0.0))
+        self.current_table.setItem(0,0, QTableWidgetItem("0.0"))
+        self.current_table.setItem(0,1, QTableWidgetItem("0.0"))
         layout.addWidget(self.current_table)
 
         button = QPushButton('Sample Data (single)', self)
@@ -74,8 +74,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     @pyqtSlot()
     def single_sample(self):
         h,t = self.sample_data()
-        self.current_table.item(0, 0).setText(t)
-        self.current_table.item(0, 1).setText(h)
+        self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
+        self.current_table.setItem(0,1, QTableWidgetItem(str(h)))
         print('PyQt5 button click')
 
     def sample_data(self):
