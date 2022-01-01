@@ -15,6 +15,7 @@ else:
     from matplotlib.backends.backend_qt4agg import (
         FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.figure import Figure
+from matplotlib import dates
 
 # my libraries
 import db
@@ -134,8 +135,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.metrics_table.setItem(0,6, QTableWidgetItem(str(sum(humid_list)/len(humid_list))))
 
         # update graph
-        t_times = matplotlib.dates.date2num(temp_times)
-        h_times = dates = matplotlib.dates.date2num(humid_times)
+        t_times = dates.date2num(temp_times)
+        h_times = dates.date2num(humid_times)
         self._static_ax.plot(t_times, temp_list, ".")
         return
 
