@@ -16,8 +16,6 @@ else:
         FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.figure import Figure
 
-
-
 # my libraries
 import db
 from psuedoSensor import PseudoSensor
@@ -50,11 +48,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             100, [(self._update_canvas, (), {})])
         self._timer.start()
 
-        current_table = QTableWidget()
-        current_table.setRowCount(1)
-        current_table.setColumnCount(2)
-        current_table.setHorizontalHeaderLabels(["F", "H"])
-        layout.addWidget(current_table)
+        self.current_table = QTableWidget()
+        self.current_table.setRowCount(1)
+        self.current_table.setColumnCount(2)
+        self.current_table.setHorizontalHeaderLabels(["F", "H"])
+        layout.addWidget(self.current_table)
 
         button = QPushButton('Sample Data (single)', self)
         layout.addWidget(button)
