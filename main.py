@@ -106,12 +106,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     @pyqtSlot()
     def multi_sample(self):
         max = 10
-        # for i in range(max):
-        #     h,t = self.sample_data()
-        #     self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
-        #     self.current_table.setItem(0,1, QTableWidgetItem(str(h)))
-        #     print('sample', i, 'temp:', t, 'humidity:', h)
-        #     time.sleep(1)
+        for i in range(max):
+            h,t = self.sample_data()
+            self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
+            self.current_table.setItem(0,1, QTableWidgetItem(str(h)))
+            print('sample', i, 'temp:', t, 'humidity:', h)
+            time.sleep(1)
         return
 
     @pyqtSlot()
