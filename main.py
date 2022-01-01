@@ -62,11 +62,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         single_button.move(100,70)
         single_button.clicked.connect(self.single_sample)
 
-        multi_button = QPushButton('Sample Data (10 Times)', self)
-        layout.addWidget(multi_button)
-        multi_button.setToolTip('Samples 10 data points')
-        multi_button.move(100,70)
-        multi_button.clicked.connect(self.multi_sample(10))
+        # multi_button = QPushButton('Sample Data (10 Times)', self)
+        # layout.addWidget(multi_button)
+        # multi_button.setToolTip('Samples 10 data points')
+        # multi_button.move(100,70)
+        # multi_button.clicked.connect(self.multi_sample(10))
 
         self.metrics_table = QTableWidget()
         self.metrics_table.setRowCount(1)
