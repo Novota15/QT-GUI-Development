@@ -93,6 +93,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Shift the sinusoid as a function of time.
         self._dynamic_ax.plot(t, np.sin(t + time.time()))
         self._dynamic_ax.figure.canvas.draw()
+        return
 
     @pyqtSlot()
     def single_sample(self):
@@ -100,15 +101,17 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
         self.current_table.setItem(0,1, QTableWidgetItem(str(h)))
         print('sample', 'temp:', t, 'humidity:', h)
+        return
 
     @pyqtSlot()
     def multi_sample(self, max=10):
-        for i in range(max):
-            h,t = self.sample_data()
-            self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
-            self.current_table.setItem(0,1, QTableWidgetItem(str(h)))
-            print('sample', 'temp:', t, 'humidity:', h)
-            time.sleep(1)
+        # for i in range(max):
+        #     h,t = self.sample_data()
+        #     self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
+        #     self.current_table.setItem(0,1, QTableWidgetItem(str(h)))
+        #     print('sample', i, 'temp:', t, 'humidity:', h)
+        #     time.sleep(1)
+        return
 
     @pyqtSlot()
     def calc_metrics(self):
@@ -128,6 +131,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.metrics_table.setItem(0,5, QTableWidgetItem(str(sum(temp_list)/len(temp_list))))
         # avg humidity
         self.metrics_table.setItem(0,6, QTableWidgetItem(str(sum(humid_list)/len(humid_list))))
+        return
 
     def sample_data(self):
         ps = PseudoSensor()
