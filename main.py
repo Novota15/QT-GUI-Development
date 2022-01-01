@@ -60,13 +60,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         layout.addWidget(single_button)
         single_button.setToolTip('Samples one data point')
         single_button.move(100,70)
-        single_button.clicked.connect(self.single_sample())
+        single_button.clicked.connect(self.single_sample)
 
         multi_button = QPushButton('Sample Data (10 Times)', self)
         layout.addWidget(multi_button)
         multi_button.setToolTip('Samples 10 data points')
         multi_button.move(100,70)
-        multi_button.clicked.connect(self.multi_sample(10))
+        multi_button.clicked.connect(self.multi_sample)
 
         self.metrics_table = QTableWidget()
         self.metrics_table.setRowCount(1)
@@ -85,7 +85,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         layout.addWidget(calc_button)
         calc_button.setToolTip('Calculates metrics')
         calc_button.move(100,70)
-        calc_button.clicked.connect(self.calc_metrics())
+        calc_button.clicked.connect(self.calc_metrics)
 
     def _update_canvas(self):
         self._dynamic_ax.clear()
@@ -104,7 +104,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         return
 
     @pyqtSlot()
-    def multi_sample(self, max):
+    def multi_sample(self):
+        max = 10
         # for i in range(max):
         #     h,t = self.sample_data()
         #     self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
