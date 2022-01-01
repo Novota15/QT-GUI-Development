@@ -56,15 +56,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.current_table.setItem(0,1, QTableWidgetItem("0.0"))
         layout.addWidget(self.current_table)
 
-        button = QPushButton('Sample Data (single)', self)
-        layout.addWidget(button)
-        button.setToolTip('Samples one data point')
-        button.move(100,70)
-        button.clicked.connect(self.single_sample)
+        single_button = QPushButton('Sample Data (single)', self)
+        layout.addWidget(single_button)
+        single_button.setToolTip('Samples one data point')
+        single_button.move(100,70)
+        single_button.clicked.connect(self.single_sample)
 
         self.metrics_table = QTableWidget()
         self.metrics_table.setRowCount(1)
-        self.metrics_table.setColumnCount(2)
+        self.metrics_table.setColumnCount(7)
         self.metrics_table.setHorizontalHeaderLabels(["Total Samples", "Min Temperature (F)", "Min Humidity (%)", "Max Temperature (F)", "Max Humidity (%)", "Avg Temperature (F)", "Avg Humidity (%)"])
         self.metrics_table.setItem(0,0, QTableWidgetItem("0.0"))
         self.metrics_table.setItem(0,1, QTableWidgetItem("0.0"))
@@ -74,6 +74,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.metrics_table.setItem(0,5, QTableWidgetItem("0.0"))
         self.metrics_table.setItem(0,6, QTableWidgetItem("0.0"))
         layout.addWidget(self.metrics_table)
+
+        calc_button = QPushButton('Calculate Metrics', self)
+        layout.addWidget(single_button)
+        calc_button.setToolTip('Calculates metrics')
+        calc_button.move(100,70)
+        calc_button.clicked.connect(self.calc_metrics)
 
     def _update_canvas(self):
         self._dynamic_ax.clear()
@@ -88,6 +94,28 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
         self.current_table.setItem(0,1, QTableWidgetItem(str(h)))
         print('PyQt5 button click')
+
+    @pyqtSlot()
+    def calc_metrics(self):
+        temp_list, temp_times = db.get_all_temps
+        humid_list, humid_times = db.get_all_humids
+        # set total samples
+        self.metrics_table.setItem(0,0, QTableWidgetItem(str(temp_list.length())))
+        # min temp
+        self.metrics_table.setItem(0,0, QTableWidgetItem(str(min(temp_list))))
+        # min humidity
+        self.metrics_table.setItem(0,0, QTableWidgetItem(str(min(humid_list))))
+        # max temp
+        self.metrics_table.setItem(0,0, QTableWidgetItem(str(max(temp_list))))
+        # max humidity
+        self.metrics_table.setItem(0,0, QTableWidgetItem(str(max(temp_list))))
+        # avg temp
+        self.metrics_table.setItem(0,0, QTableWidgetItem(str(sum(temp_list)/len(temp_list))))
+        # avg humidity
+        self.metrics_table.setItem(0,0, QTableWidgetItem(str(sum(humid_list)/len(humid_list))))
+
+
+
 
     def sample_data(self):
         ps = PseudoSensor()

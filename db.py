@@ -79,9 +79,24 @@ def add_humidity(session, value, time):
     session.commit()
     return
 
-# check if element exists in db
-def check_host(session, name):
-    host = session.query(Host).filter_by(name=name).scalar()
-    if host == None:
-        return False
-    return True
+def get_all_temps(session, type):
+    temp_list = []
+    temp_times = []
+    temps = session.query(Temperature).all()
+    for temp in temps:
+        if type == "f":
+            temp_list.append(temp.value_f)
+        else:
+            temp_list.append(temp.value_c)
+        temp_times.append(temp.time)
+    return temp_list, temp_times
+
+def get_all_humids(session):
+    humid_list = []
+    humid_times = []
+    humids = session. query(Humidity).all()
+    for humid in humids:
+        humid_list.append(humid.value)
+        humid_times.append(humid.time)
+    return humid_list, humid_times
+        
