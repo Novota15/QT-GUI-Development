@@ -72,8 +72,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     @pyqtSlot()
     def single_sample(self):
         h,t = self.sample_data()
-        self.current_table.item(1, 1).setText(t)
-        self.current_table.item(1, 2).setText(h)
+        self.current_table.item(0, 0).setText(t)
+        self.current_table.item(0, 1).setText(h)
         print('PyQt5 button click')
 
     def sample_data(self):
