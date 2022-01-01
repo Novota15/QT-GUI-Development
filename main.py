@@ -51,7 +51,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.current_table = QTableWidget()
         self.current_table.setRowCount(1)
         self.current_table.setColumnCount(2)
-        self.current_table.setHorizontalHeaderLabels(["F", "H"])
+        self.current_table.setHorizontalHeaderLabels(["Temperature (F)", "Humidity (%)"])
         self.current_table.setItem(0,0, QTableWidgetItem("0.0"))
         self.current_table.setItem(0,1, QTableWidgetItem("0.0"))
         layout.addWidget(self.current_table)
@@ -62,7 +62,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         button.move(100,70)
         button.clicked.connect(self.single_sample)
 
-        
+        self.metrics_table = QTableWidget()
+        self.metrics_table.setRowCount(1)
+        self.metrics_table.setColumnCount(2)
+        self.metrics_table.setHorizontalHeaderLabels(["Total Samples", "Min Temperature (F)", "Min Humidity (%)", "Max Temperature (F)", "Max Humidity (%)", "Avg Temperature (F)", "Avg Humidity (%)"])
+        self.metrics_table.setItem(0,0, QTableWidgetItem("0.0"))
+        self.metrics_table.setItem(0,1, QTableWidgetItem("0.0"))
+        self.metrics_table.setItem(0,2, QTableWidgetItem("0.0"))
+        self.metrics_table.setItem(0,3, QTableWidgetItem("0.0"))
+        self.metrics_table.setItem(0,4, QTableWidgetItem("0.0"))
+        self.metrics_table.setItem(0,5, QTableWidgetItem("0.0"))
+        self.metrics_table.setItem(0,6, QTableWidgetItem("0.0"))
+        layout.addWidget(self.metrics_table)
 
     def _update_canvas(self):
         self._dynamic_ax.clear()
