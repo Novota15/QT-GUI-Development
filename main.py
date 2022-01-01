@@ -2,7 +2,7 @@
 import sys
 import time
 import numpy as np
-import datetime
+from datetime import datetime
 
 from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
 if is_pyqt5():
