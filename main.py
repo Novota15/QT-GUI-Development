@@ -102,17 +102,17 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # set total samples
         self.metrics_table.setItem(0,0, QTableWidgetItem(str(len(temp_list))))
         # min temp
-        self.metrics_table.setItem(0,0, QTableWidgetItem(str(min(temp_list))))
+        self.metrics_table.setItem(0,1, QTableWidgetItem(str(min(temp_list))))
         # min humidity
-        self.metrics_table.setItem(0,0, QTableWidgetItem(str(min(humid_list))))
+        self.metrics_table.setItem(0,2, QTableWidgetItem(str(min(humid_list))))
         # max temp
-        self.metrics_table.setItem(0,0, QTableWidgetItem(str(max(temp_list))))
+        self.metrics_table.setItem(0,3, QTableWidgetItem(str(max(temp_list))))
         # max humidity
-        self.metrics_table.setItem(0,0, QTableWidgetItem(str(max(temp_list))))
+        self.metrics_table.setItem(0,4, QTableWidgetItem(str(max(temp_list))))
         # avg temp
-        self.metrics_table.setItem(0,0, QTableWidgetItem(str(sum(temp_list)/len(temp_list))))
+        self.metrics_table.setItem(0,5, QTableWidgetItem(str(sum(temp_list)/len(temp_list))))
         # avg humidity
-        self.metrics_table.setItem(0,0, QTableWidgetItem(str(sum(humid_list)/len(humid_list))))
+        self.metrics_table.setItem(0,6, QTableWidgetItem(str(sum(humid_list)/len(humid_list))))
 
     def sample_data(self):
         ps = PseudoSensor()
