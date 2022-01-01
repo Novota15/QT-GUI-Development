@@ -132,6 +132,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.metrics_table.setItem(0,5, QTableWidgetItem(str(sum(temp_list)/len(temp_list))))
         # avg humidity
         self.metrics_table.setItem(0,6, QTableWidgetItem(str(sum(humid_list)/len(humid_list))))
+
+        # update graph
+        t_times = matplotlib.dates.date2num(temp_times))
+        h_times = dates = matplotlib.dates.date2num(humid_times)
+        self._static_ax.plot(t_times, temp_list, ".")
         return
 
     def sample_data(self):
