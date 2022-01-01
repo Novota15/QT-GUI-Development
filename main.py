@@ -52,6 +52,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.current_table.setRowCount(1)
         self.current_table.setColumnCount(2)
         self.current_table.setHorizontalHeaderLabels(["F", "H"])
+        self.current_table.item(0, 0).setText(0)
+        self.current_table.item(0, 1).setText(0)
         layout.addWidget(self.current_table)
 
         button = QPushButton('Sample Data (single)', self)
