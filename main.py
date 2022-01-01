@@ -124,6 +124,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
             self.current_table.setItem(0,1, QTableWidgetItem(str(h)))
             print('sample', i, 'temp:', t, 'humidity:', h)
+            self._update_canvas()
             time.sleep(1)
         return
 
