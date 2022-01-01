@@ -88,11 +88,23 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         calc_button.move(100,70)
         calc_button.clicked.connect(self.calc_metrics)
 
+    # def _update_canvas(self):
+    #     self._dynamic_ax.clear()
+    #     t = np.linspace(0, 10, 101)
+    #     # Shift the sinusoid as a function of time.
+    #     self._dynamic_ax.plot(t, np.sin(t + time.time()))
+    #     self._dynamic_ax.figure.canvas.draw()
+    #     return
+
     def _update_canvas(self):
+        temp_list, temp_times = db.get_all_temps(session, "f")
+        humid_list, humid_times = db.get_all_humids(session)
+        t_times = dates.date2num(temp_times)
+        h_times = dates.date2num(humid_times)
         self._dynamic_ax.clear()
-        t = np.linspace(0, 10, 101)
+        # t = np.linspace(0, 10, 101)
         # Shift the sinusoid as a function of time.
-        self._dynamic_ax.plot(t, np.sin(t + time.time()))
+        self._dynamic_ax.plot(t_times, temp_list)
         self._dynamic_ax.figure.canvas.draw()
         return
 
