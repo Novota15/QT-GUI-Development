@@ -5,6 +5,16 @@ Using Qt as a GUI tool with Python to create prototype device interfaces.
 * Python 3.8+
 * Packages listed in requirements.txt
 * sqlite3
+* Qt5
+
+# Install Qt5
+```
+sudo apt-get install build-essential
+sudo apt-get install qtcreator
+sudo apt-get install qt5-default
+```
+When using Ubuntu, I had problems and also had to run:
+```sudo apt-get install --reinstall libxcb-xinerama0```
 
 Install packages with ```$ pip3 install -r requirements.txt```
 
