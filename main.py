@@ -100,7 +100,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         temp_list, temp_times = db.get_all_temps(session, "f")
         humid_list, humid_times = db.get_all_humids(session)
         # set total samples
-        self.metrics_table.setItem(0,0, QTableWidgetItem(str(temp_list.length())))
+        self.metrics_table.setItem(0,0, QTableWidgetItem(str(len(temp_list))))
         # min temp
         self.metrics_table.setItem(0,0, QTableWidgetItem(str(min(temp_list))))
         # min humidity
