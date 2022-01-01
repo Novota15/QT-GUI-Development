@@ -62,6 +62,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         single_button.move(100,70)
         single_button.clicked.connect(self.single_sample)
 
+        multi_button = QPushButton('Sample Data (10 Times)', self)
+        layout.addWidget(multi_button)
+        multi_button.setToolTip('Samples 10 data points')
+        multi_button.move(100,70)
+        multi_button.clicked.connect(self.multi_sample(10))
+
         self.metrics_table = QTableWidget()
         self.metrics_table.setRowCount(1)
         self.metrics_table.setColumnCount(7)
@@ -93,7 +99,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         h,t = self.sample_data()
         self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
         self.current_table.setItem(0,1, QTableWidgetItem(str(h)))
-        print('PyQt5 button click')
+        print('single sample', 'temp:', t, 'humidity:', h)
+
+    @pyqtSlot()
+    def multi_sample(self, max=10):
+        for i in range(max):
+            h,t = self.sample_data()
+            self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
+            self.current_table.setItem(0,1, QTableWidgetItem(str(h)))
+            print('single sample', 'temp:', t, 'humidity:', h)
+            time.sleep(1)
 
     @pyqtSlot()
     def calc_metrics(self):
