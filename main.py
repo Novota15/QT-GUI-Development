@@ -51,6 +51,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self._timer.start()
 
         button = QPushButton('PyQt5 button', self)
+        layout.addWidget(button)
         button.setToolTip('This is an example button')
         button.move(100,70)
         button.clicked.connect(self.on_click)
