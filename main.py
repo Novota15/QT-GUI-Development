@@ -8,7 +8,7 @@ from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
 if is_pyqt5():
     from matplotlib.backends.backend_qt5agg import (
         FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
-    from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QTableWidget
+    from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QTableWidget, QTableWidgetItem
     from PyQt5.QtGui import QIcon
     from PyQt5.QtCore import pyqtSlot
 else:
@@ -52,8 +52,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.current_table.setRowCount(1)
         self.current_table.setColumnCount(2)
         self.current_table.setHorizontalHeaderLabels(["F", "H"])
-        self.current_table.item(0, 0).setText(0)
-        self.current_table.item(0, 1).setText(0)
+        self.current_table.setItem(0,0, QTableWidgetItem(0.0))
+        self.current_table.setItem(0,0, QTableWidgetItem(0.0))
         layout.addWidget(self.current_table)
 
         button = QPushButton('Sample Data (single)', self)
