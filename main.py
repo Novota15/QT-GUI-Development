@@ -76,7 +76,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         layout.addWidget(self.metrics_table)
 
         calc_button = QPushButton('Calculate Metrics', self)
-        layout.addWidget(single_button)
+        layout.addWidget(calc_button)
         calc_button.setToolTip('Calculates metrics')
         calc_button.move(100,70)
         calc_button.clicked.connect(self.calc_metrics)
@@ -97,8 +97,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def calc_metrics(self):
-        temp_list, temp_times = db.get_all_temps
-        humid_list, humid_times = db.get_all_humids
+        temp_list, temp_times = db.get_all_temps()
+        humid_list, humid_times = db.get_all_humids()
         # set total samples
         self.metrics_table.setItem(0,0, QTableWidgetItem(str(temp_list.length())))
         # min temp
@@ -113,9 +113,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.metrics_table.setItem(0,0, QTableWidgetItem(str(sum(temp_list)/len(temp_list))))
         # avg humidity
         self.metrics_table.setItem(0,0, QTableWidgetItem(str(sum(humid_list)/len(humid_list))))
-
-
-
 
     def sample_data(self):
         ps = PseudoSensor()
