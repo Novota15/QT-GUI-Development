@@ -12,7 +12,10 @@ Base = declarative_base()
 class Temperature(Base):
     __tablename__ = 'temperature'
     id = Column(Integer, primary_key = True, autoincrement=True)
-    value = Column(Float)
+    # fahrenheit
+    value_f = Column(Float)
+    # celsius
+    value_c = Column(Float)
     time = Column(DateTime)
 
 class Humidity(Base):
@@ -64,8 +67,8 @@ def delete_obj(session, obj):
     return
 
 # add rows to tables
-def add_temp(session, value, time):
-    temp = Temperature(value=value, time=time)
+def add_temp(session, value_f, value_c, time):
+    temp = Temperature(value_f=value_f, value_c=value_c, time=time)
     session.add(temp)
     session.commit()
     return
