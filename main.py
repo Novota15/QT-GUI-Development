@@ -8,7 +8,7 @@ from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
 if is_pyqt5():
     from matplotlib.backends.backend_qt5agg import (
         FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
-    from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QTableWidget, QTableWidgetItem
+    from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QTableWidget, QTableWidgetItem, QInputDialog, QLineEdit
     from PyQt5.QtGui import QIcon
     from PyQt5.QtCore import pyqtSlot
 else:
@@ -101,7 +101,35 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # alarm message box
         self.alarm_dialog = QtWidgets.QErrorMessage()
+
+        # buttons for changing alarm limits
+        maxt_button = QPushButton('Set Max Temperature', self)
+        layout.addWidget(maxt_button)
+        maxt_button.setToolTip('Set Max Temperature')
+        maxt_button.move(100,70)
+        maxt_button.clicked.connect(self.getInteger())
+
+        mint_button = QPushButton('Set Min Temperature', self)
+        layout.addWidget(mint_button)
+        mint_button.setToolTip('Set Min Temperature')
+        mint_button.move(100,70)
+        mint_button.clicked.connect(self.getInteger())
+
+        maxh_button = QPushButton('Set Max Humidity', self)
+        layout.addWidget(maxh_button)
+        maxh_button.setToolTip('Set Max Humidity')
+        maxh_button.move(100,70)
+        maxh_button.clicked.connect(self.getInteger())
+
+        minh_button = QPushButton('Set Min Humidity', self)
+        layout.addWidget(minh_button)
+        minh_button.setToolTip('Set Min Humidity')
+        minh_button.move(100,70)
+        minh_button.clicked.connect(self.getInteger)
         
+        
+
+        # close UI button
         exit_button = QPushButton('Exit UI', self)
         layout.addWidget(exit_button)
         exit_button.setToolTip('Exit UI')
@@ -165,11 +193,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     @pyqtSlot()
     def multi_sample(self):
         max = 10
+        print("take 10 samples:")
         for i in range(max):
             h,t = self.sample_data()
             self.current_table.setItem(0,0, QTableWidgetItem(str(t)))
             self.current_table.setItem(0,1, QTableWidgetItem(str(h)))
-            print('sample', i, 'temp:', t, 'humidity:', h)
+            print('sample', i+1, 'temp:', t, 'humidity:', h)
             time.sleep(1)
         return
 
@@ -192,6 +221,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # avg humidity
         self.metrics_table.setItem(0,6, QTableWidgetItem(str(sum(humid_list)/len(humid_list))))
         return
+    
+    def getInteger(self):
+        i, okPressed = QInputDialog.getInt(self, "Get integer","Percentage:", 28, 0, 100, 1)
+        if okPressed:
+            print(i)
 
     # get sample of data from pseudo sensor
     def sample_data(self):
