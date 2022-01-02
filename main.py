@@ -176,7 +176,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # max temp
         self.metrics_table.setItem(0,3, QTableWidgetItem(str(max(temp_list))))
         # max humidity
-        self.metrics_table.setItem(0,4, QTableWidgetItem(str(max(temp_list))))
+        self.metrics_table.setItem(0,4, QTableWidgetItem(str(max(humid_list))))
         # avg temp
         self.metrics_table.setItem(0,5, QTableWidgetItem(str(sum(temp_list)/len(temp_list))))
         # avg humidity
