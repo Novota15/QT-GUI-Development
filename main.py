@@ -107,19 +107,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         layout.addWidget(maxt_button)
         maxt_button.setToolTip('Set Max Temperature')
         maxt_button.move(100,70)
-        maxt_button.clicked.connect(self.getInteger())
+        maxt_button.clicked.connect(self.getInteger)
 
         mint_button = QPushButton('Set Min Temperature', self)
         layout.addWidget(mint_button)
         mint_button.setToolTip('Set Min Temperature')
         mint_button.move(100,70)
-        mint_button.clicked.connect(self.getInteger())
+        mint_button.clicked.connect(self.getInteger)
 
         maxh_button = QPushButton('Set Max Humidity', self)
         layout.addWidget(maxh_button)
         maxh_button.setToolTip('Set Max Humidity')
         maxh_button.move(100,70)
-        maxh_button.clicked.connect(self.getInteger())
+        maxh_button.clicked.connect(self.getInteger)
 
         minh_button = QPushButton('Set Min Humidity', self)
         layout.addWidget(minh_button)
