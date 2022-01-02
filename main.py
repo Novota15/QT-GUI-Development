@@ -232,28 +232,28 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         i, okPressed = QInputDialog.getInt(self, "Get integer","Set Max Temp:", 28, 0, 100, 1)
         if okPressed:
             self.temp_max_limit = i
-            print(i)
+            print(self.temp_max_limit)
 
     @pyqtSlot()
     def set_min_temp(self):
         i, okPressed = QInputDialog.getInt(self, "Get integer","Set Min Temp Value:", 28, 0, 100, 1)
         if okPressed:
             self.temp_min_limit = i
-            print(i)
+            print(self.temp_min_limit)
 
     @pyqtSlot()
     def set_max_humidity(self):
         i, okPressed = QInputDialog.getInt(self, "Get integer","Set Max Humidity Value:", 28, 0, 100, 1)
         if okPressed:
-            self.humid_max_limit - i
-            print(i)
+            self.humid_max_limit = i
+            print(self.humid_max_limit)
 
     @pyqtSlot()
     def set_min_humidity(self):
         i, okPressed = QInputDialog.getInt(self, "Get integer","Set Min Humidity Value:", 28, 0, 100, 1)
         if okPressed:
             self.humid_min_limit = i
-            print(i)
+            print(self.humid_min_limi)
 
     # get sample of data from pseudo sensor
     def sample_data(self):
@@ -266,13 +266,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # check if we hit an alarm
         message = "None"
-        if temp_f > temp_max_limit:
+        if temp_f > self.temp_max_limit:
             message = "Oh no, Max temp of " + str(temp_max_limit) + "F exceeded! Current: ", str(temp_f)
-        elif temp_f < temp_min_limit:
+        elif temp_f < self.temp_min_limit:
             message = "Oh no, Min temp of " + str(temp_min_limit) + "F exceeded! Current: ", str(temp_f)
-        elif h > humid_max_limit:
+        elif h > self.humid_max_limit:
             message = "Oh no, Max Humidity of " + str(humid_max_limit) + '%' + " exceeded! Current: ", str(h)
-        elif h < humid_min_limit:
+        elif h < self.humid_min_limit:
             message = "Oh no, Min Humidity of " + str(humid_min_limit) + '%' + " exceeded! Current: ", str(h)
         if message != "None":
             self.alarm_dialog.showMessage(message)
