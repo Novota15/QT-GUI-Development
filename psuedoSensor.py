@@ -1,5 +1,6 @@
 import random
 
+# pseudo temp and humidity sensor
 class PseudoSensor:
     h_range = [0, 20, 20, 40, 40, 60, 60, 80, 80, 90, 70, 70, 50, 50, 30, 30, 10, 10]
     t_range = [-20, -10, 0, 10, 30, 50, 70, 80, 90, 80, 60, 40, 20, 10, 0, -10]

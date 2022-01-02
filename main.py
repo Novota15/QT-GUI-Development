@@ -24,6 +24,12 @@ from psuedoSensor import PseudoSensor
 # init database
 session = db.init_session()
 
+# alarm limits
+temp_min_limit = -5.0
+temp_max_limit = 80.0
+humid_min_limit = 10.0
+humid_max_limit = 80.0
+
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
@@ -31,6 +37,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self._main)
         layout = QtWidgets.QVBoxLayout(self._main)
 
+        # graphs of temperature and humidity - refresh on interval
         dynamic_canvas_temps = FigureCanvas(Figure(figsize=(5, 3)))
         layout.addWidget(dynamic_canvas_temps)
         # self.addToolBar(QtCore.Qt.BottomToolBarArea,
@@ -51,6 +58,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             150, [(self.update_canvas_humid, (), {})])
         self.humid_timer.start()
 
+        # table of current temp/humidity
         self.current_table = QTableWidget()
         self.current_table.setRowCount(1)
         self.current_table.setColumnCount(2)
@@ -71,6 +79,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         multi_button.move(100,70)
         multi_button.clicked.connect(self.multi_sample)
 
+        # table of calculated metrics
         self.metrics_table = QTableWidget()
         self.metrics_table.setRowCount(1)
         self.metrics_table.setColumnCount(7)
@@ -104,14 +113,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # t_times = dates.date2num(temp_times)
         # h_times = dates.date2num(humid_times)
         self.dynamic_ax_temps.clear()
-        self.dynamic_ax_temps.plot(temp_times, temp_list)
+        self.dynamic_ax_temps.title("Temperature vs Time")
+        self.dynamic_ax_temps.xlabel("Time")
+        self.dynamic_ax_temps.ylabel("Temp (F)")
+        self.dynamic_ax_temps.plot(temp_times, temp_list, label = "Measured")
+        self.dynamic_ax_temps.plot(temp_times, temp_max_limit, '--', label = "Max Temp")
+        self.dynamic_ax_temps.plot(temp_times, temp_min_limit, '--', label = "Min Temp")
         self.dynamic_ax_temps.figure.canvas.draw()
         return
 
     def update_canvas_humid(self):
         humid_list, humid_times = db.get_all_humids(session)
         self.dynamic_ax_humid.clear()
-        self.dynamic_ax_humid.plot(humid_times, humid_list)
+        self.dynamic_ax_humid.title("Humidity vs Time")
+        self.dynamic_ax_humid.xlabel("Time")
+        self.dynamic_ax_humid.ylabel("Humidity (%)")
+        self.dynamic_ax_humid.plot(humid_times, humid_list, label = "Measured")
+        self.dynamic_ax_humid.plot(humid_times, humid_max_limit, '--', label = "Max Humidity")
+        self.dynamic_ax_humid.plot(humid_times, humid_min_limit, '--', label = "Min Humidity")
         self.dynamic_ax_humid.figure.canvas.draw()
         return
 
@@ -154,6 +173,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.metrics_table.setItem(0,6, QTableWidgetItem(str(sum(humid_list)/len(humid_list))))
         return
 
+    # get sample of data from pseudo sensor
     def sample_data(self):
         ps = PseudoSensor()
         h,temp_f = ps.generate_values()
