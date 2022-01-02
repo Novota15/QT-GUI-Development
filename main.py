@@ -267,13 +267,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # check if we hit an alarm
         message = "None"
         if temp_f > self.temp_max_limit:
-            message = "Oh no, Max temp of " + str(temp_max_limit) + "F exceeded! Current: ", str(temp_f)
+            message = "Oh no, Max temp of " + str(temp_max_limit) + "F exceeded! Current: " + str(temp_f)
         elif temp_f < self.temp_min_limit:
-            message = "Oh no, Min temp of " + str(temp_min_limit) + "F exceeded! Current: ", str(temp_f)
+            message = "Oh no, Min temp of " + str(temp_min_limit) + "F exceeded! Current: " + str(temp_f)
         elif h > self.humid_max_limit:
-            message = "Oh no, Max Humidity of " + str(humid_max_limit) + '%' + " exceeded! Current: ", str(h)
+            message = "Oh no, Max Humidity of " + str(humid_max_limit) + "%" + " exceeded! Current: " + str(h)
         elif h < self.humid_min_limit:
-            message = "Oh no, Min Humidity of " + str(humid_min_limit) + '%' + " exceeded! Current: ", str(h)
+            message = "Oh no, Min Humidity of " + str(humid_min_limit) + "%" + " exceeded! Current: " + str(h)
         if message != "None":
             self.alarm_dialog.showMessage(message)
 
