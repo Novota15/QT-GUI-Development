@@ -25,10 +25,10 @@ from psuedoSensor import PseudoSensor
 session = db.init_session()
 
 # alarm limits
-temp_min_limit = -5.0
+temp_min_limit = 30.0
 temp_max_limit = 80.0
-humid_min_limit = 10.0
-humid_max_limit = 80.0
+humid_min_limit = 30.0
+humid_max_limit = 70.0
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -98,6 +98,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         calc_button.setToolTip('Calculates metrics')
         calc_button.move(100,70)
         calc_button.clicked.connect(self.calc_metrics)
+
+        self.alarm_dialog = QtWidgets.QErrorMessage()
+        self.alarm_dialog.showMessage('Oh no!')
 
     # def _update_canvas(self):
     #     self._dynamic_ax.clear()
