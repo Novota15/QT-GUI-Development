@@ -33,6 +33,11 @@ humid_max_limit = 70.0
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
+        self.temp_min_limit = temp_min_limit
+        self.temp_max_limit = temp_max_limit
+        self.humid_min_limit = humid_min_limit
+        self.humid_max_limit = humid_max_limit
+
         self._main = QtWidgets.QWidget()
         self.setCentralWidget(self._main)
         layout = QtWidgets.QVBoxLayout(self._main)
@@ -67,18 +72,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.current_table.setItem(0,1, QTableWidgetItem("0.0"))
         layout.addWidget(self.current_table)
 
-        single_button = QPushButton('Sample Data (single)', self)
-        layout.addWidget(single_button)
-        single_button.setToolTip('Samples one data point')
-        single_button.move(100,70)
-        single_button.clicked.connect(self.single_sample)
-
-        multi_button = QPushButton('Sample Data (10 Times)', self)
-        layout.addWidget(multi_button)
-        multi_button.setToolTip('Samples 10 data points')
-        multi_button.move(100,70)
-        multi_button.clicked.connect(self.multi_sample)
-
         # table of calculated metrics
         self.metrics_table = QTableWidget()
         self.metrics_table.setRowCount(1)
@@ -93,6 +86,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.metrics_table.setItem(0,6, QTableWidgetItem("0.0"))
         layout.addWidget(self.metrics_table)
 
+        single_button = QPushButton('Sample Data (single)', self)
+        layout.addWidget(single_button)
+        single_button.setToolTip('Samples one data point')
+        single_button.move(100,70)
+        single_button.clicked.connect(self.single_sample)
+
+        multi_button = QPushButton('Sample Data (10 Times)', self)
+        layout.addWidget(multi_button)
+        multi_button.setToolTip('Samples 10 data points')
+        multi_button.move(100,70)
+        multi_button.clicked.connect(self.multi_sample)
+        
         calc_button = QPushButton('Calculate Metrics', self)
         layout.addWidget(calc_button)
         calc_button.setToolTip('Calculates metrics')
@@ -107,25 +112,25 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         layout.addWidget(maxt_button)
         maxt_button.setToolTip('Set Max Temperature')
         maxt_button.move(100,70)
-        maxt_button.clicked.connect(self.getInteger)
+        maxt_button.clicked.connect(self.set_max_temp)
 
         mint_button = QPushButton('Set Min Temperature', self)
         layout.addWidget(mint_button)
         mint_button.setToolTip('Set Min Temperature')
         mint_button.move(100,70)
-        mint_button.clicked.connect(self.getInteger)
+        mint_button.clicked.connect(self.set_min_temp)
 
         maxh_button = QPushButton('Set Max Humidity', self)
         layout.addWidget(maxh_button)
         maxh_button.setToolTip('Set Max Humidity')
         maxh_button.move(100,70)
-        maxh_button.clicked.connect(self.getInteger)
+        maxh_button.clicked.connect(self.set_max_humidity)
 
         minh_button = QPushButton('Set Min Humidity', self)
         layout.addWidget(minh_button)
         minh_button.setToolTip('Set Min Humidity')
         minh_button.move(100,70)
-        minh_button.clicked.connect(self.getInteger)
+        minh_button.clicked.connect(self.set_min_humidity)
         
         
 
@@ -151,8 +156,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         min_list = []
         max_list = []
         for temp in temp_list:
-            min_list.append(temp_min_limit)
-            max_list.append(temp_max_limit)
+            min_list.append(self.temp_min_limit)
+            max_list.append(self.temp_max_limit)
         # t_times = dates.date2num(temp_times)
         # h_times = dates.date2num(humid_times)
         self.dynamic_ax_temps.clear()
@@ -170,8 +175,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         min_list = []
         max_list = []
         for humidity in humid_list:
-            min_list.append(humid_min_limit)
-            max_list.append(humid_max_limit)
+            min_list.append(self.humid_min_limit)
+            max_list.append(self.humid_max_limit)
         self.dynamic_ax_humid.clear()
         self.dynamic_ax_humid.set_title("Humidity vs Time")
         self.dynamic_ax_humid.set_xlabel("Time")
@@ -225,6 +230,34 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def getInteger(self):
         i, okPressed = QInputDialog.getInt(self, "Get integer","Percentage:", 28, 0, 100, 1)
         if okPressed:
+            print(i)
+    
+    @pyqtSlot()
+    def set_max_temp(self):
+        i, okPressed = QInputDialog.getFloat(self, "Get integer","Set Max Temp:", 28, 0, 100, 1)
+        if okPressed:
+            self.temp_max_limit = i
+            print(i)
+
+    @pyqtSlot()
+    def set_min_temp(self):
+        i, okPressed = QInputDialog.getFloat(self, "Get integer","Set Min Temp Value:", 28, 0, 100, 1)
+        if okPressed:
+            self.temp_min_limit = i
+            print(i)
+
+    @pyqtSlot()
+    def set_max_humidity(self):
+        i, okPressed = QInputDialog.getFloat(self, "Get integer","Set Max Humidity Value:", 28, 0, 100, 1)
+        if okPressed:
+            self.humid_max_limit - i
+            print(i)
+
+    @pyqtSlot()
+    def set_min_humidity(self):
+        i, okPressed = QInputDialog.getFloat(self, "Get integer","Set Min Humidity Value:", 28, 0, 100, 1)
+        if okPressed:
+            self.humid_min_limit = i
             print(i)
 
     # get sample of data from pseudo sensor
