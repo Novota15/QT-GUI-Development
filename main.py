@@ -110,6 +110,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def update_canvas_temps(self):
         temp_list, temp_times = db.get_all_temps(session, "f")
         humid_list, humid_times = db.get_all_humids(session)
+        min_list = []
+        max_list = []
+        for temp in temp_list:
+            min_list.append(temp_min_limit)
+            max_list.append(temp_max_limit)
         # t_times = dates.date2num(temp_times)
         # h_times = dates.date2num(humid_times)
         self.dynamic_ax_temps.clear()
@@ -117,20 +122,25 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.dynamic_ax_temps.set_xlabel("Time")
         self.dynamic_ax_temps.set_ylabel("Temp (F)")
         self.dynamic_ax_temps.plot(temp_times, temp_list, label = "Measured")
-        self.dynamic_ax_temps.plot(temp_times, temp_max_limit, '--', label = "Max Temp")
-        self.dynamic_ax_temps.plot(temp_times, temp_min_limit, '--', label = "Min Temp")
+        self.dynamic_ax_temps.plot(temp_times, max_list, '--', label = "Max Temp")
+        self.dynamic_ax_temps.plot(temp_times, min_list, '--', label = "Min Temp")
         self.dynamic_ax_temps.figure.canvas.draw()
         return
 
     def update_canvas_humid(self):
         humid_list, humid_times = db.get_all_humids(session)
+        min_list = []
+        max_list = []
+        for humidity in humid_list:
+            min_list.append(humid_min_limit)
+            max_list.append(humid_max_limit)
         self.dynamic_ax_humid.clear()
         self.dynamic_ax_humid.set_title("Humidity vs Time")
         self.dynamic_ax_humid.set_xlabel("Time")
         self.dynamic_ax_humid.set_ylabel("Humidity (%)")
         self.dynamic_ax_humid.plot(humid_times, humid_list, label = "Measured")
-        self.dynamic_ax_humid.plot(humid_times, humid_max_limit, '--', label = "Max Humidity")
-        self.dynamic_ax_humid.plot(humid_times, humid_min_limit, '--', label = "Min Humidity")
+        self.dynamic_ax_humid.plot(humid_times, max_list, '--', label = "Max Humidity")
+        self.dynamic_ax_humid.plot(humid_times, min_list, '--', label = "Min Humidity")
         self.dynamic_ax_humid.figure.canvas.draw()
         return
 
