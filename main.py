@@ -102,6 +102,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # alarm message box
         self.alarm_dialog = QtWidgets.QErrorMessage()
         
+        exit_button = QPushButton('Exit UI', self)
+        layout.addWidget(exit_button)
+        exit_button.setToolTip('Exit UI')
+        exit_button.move(100,70)
+        exit_button.clicked.connect(self.close)
+        
 
     # def _update_canvas(self):
     #     self._dynamic_ax.clear()
@@ -208,7 +214,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             message = "Oh no, Min Humidity of " + str(humid_min_limit) + '%' + " exceeded! Current: ", str(h)
         if message != "None":
             self.alarm_dialog.showMessage(message)
-            
+
         return h, temp_f
 
 
