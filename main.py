@@ -99,8 +99,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         calc_button.move(100,70)
         calc_button.clicked.connect(self.calc_metrics)
 
+        # alarm message box
         self.alarm_dialog = QtWidgets.QErrorMessage()
-        self.alarm_dialog.showMessage('Oh no!')
+        
 
     # def _update_canvas(self):
     #     self._dynamic_ax.clear()
@@ -194,6 +195,20 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         now = datetime.now()
         db.add_temp(session, temp_f, temp_c, now)
         db.add_humidity(session, h, now)
+
+        # check if we hit an alarm
+        message = "None"
+        if temp_f > temp_max_limit:
+            message = "Oh no, Max temp of " + str(temp_max_limit) + "F exceeded! Current: ", str(temp_f)
+        elif temp_f < temp_min_limit:
+            message = "Oh no, Min temp of " + str(temp_min_limit) + "F exceeded! Current: ", str(temp_f)
+        elif h > humid_max_limit:
+            message = "Oh no, Max Humidity of " + str(humid_max_limit) + '%' + " exceeded! Current: ", str(h)
+        elif h < humid_min_limit:
+            message = "Oh no, Min Humidity of " + str(humid_min_limit) + '%' + " exceeded! Current: ", str(h)
+        if message != "None":
+            self.alarm_dialog.showMessage(message)
+            
         return h, temp_f
 
 
