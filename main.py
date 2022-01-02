@@ -113,7 +113,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # t_times = dates.date2num(temp_times)
         # h_times = dates.date2num(humid_times)
         self.dynamic_ax_temps.clear()
-        self.dynamic_ax_temps.title("Temperature vs Time")
+        self.dynamic_ax_temps.set_title("Temperature vs Time")
         self.dynamic_ax_temps.xlabel("Time")
         self.dynamic_ax_temps.ylabel("Temp (F)")
         self.dynamic_ax_temps.plot(temp_times, temp_list, label = "Measured")
@@ -125,7 +125,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def update_canvas_humid(self):
         humid_list, humid_times = db.get_all_humids(session)
         self.dynamic_ax_humid.clear()
-        self.dynamic_ax_humid.title("Humidity vs Time")
+        self.dynamic_ax_humid.set_title("Humidity vs Time")
         self.dynamic_ax_humid.xlabel("Time")
         self.dynamic_ax_humid.ylabel("Humidity (%)")
         self.dynamic_ax_humid.plot(humid_times, humid_list, label = "Measured")

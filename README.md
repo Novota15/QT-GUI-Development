@@ -25,3 +25,4 @@ Execute ```$ python main.py```
 # Resources
 * https://build-system.fman.io/pyqt5-tutorial
 * https://matplotlib.org/3.1.1/gallery/user_interfaces/embedding_in_qt_sgskip.html
+* https://www.pythonguis.com/tutorials/plotting-matplotlib/
