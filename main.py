@@ -227,35 +227,30 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.metrics_table.setItem(0,6, QTableWidgetItem(str(sum(humid_list)/len(humid_list))))
         return
     
-    def getInteger(self):
-        i, okPressed = QInputDialog.getInt(self, "Get integer","Percentage:", 28, 0, 100, 1)
-        if okPressed:
-            print(i)
-    
     @pyqtSlot()
     def set_max_temp(self):
-        i, okPressed = QInputDialog.getFloat(self, "Get integer","Set Max Temp:", 28, 0, 100, 1)
+        i, okPressed = QInputDialog.getInt(self, "Get integer","Set Max Temp:", 28, 0, 100, 1)
         if okPressed:
             self.temp_max_limit = i
             print(i)
 
     @pyqtSlot()
     def set_min_temp(self):
-        i, okPressed = QInputDialog.getFloat(self, "Get integer","Set Min Temp Value:", 28, 0, 100, 1)
+        i, okPressed = QInputDialog.getInt(self, "Get integer","Set Min Temp Value:", 28, 0, 100, 1)
         if okPressed:
             self.temp_min_limit = i
             print(i)
 
     @pyqtSlot()
     def set_max_humidity(self):
-        i, okPressed = QInputDialog.getFloat(self, "Get integer","Set Max Humidity Value:", 28, 0, 100, 1)
+        i, okPressed = QInputDialog.getInt(self, "Get integer","Set Max Humidity Value:", 28, 0, 100, 1)
         if okPressed:
             self.humid_max_limit - i
             print(i)
 
     @pyqtSlot()
     def set_min_humidity(self):
-        i, okPressed = QInputDialog.getFloat(self, "Get integer","Set Min Humidity Value:", 28, 0, 100, 1)
+        i, okPressed = QInputDialog.getInt(self, "Get integer","Set Min Humidity Value:", 28, 0, 100, 1)
         if okPressed:
             self.humid_min_limit = i
             print(i)
